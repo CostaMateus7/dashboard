@@ -1,5 +1,5 @@
-import { Button } from "@mui/material";
-import { Route, Routes, Navigate } from "react-router-dom";
+import { Button } from '@mui/material';
+import { Route, Routes, Navigate } from 'react-router-dom';
 
 function AppRoutes() {
   return (
@@ -12,7 +12,7 @@ function AppRoutes() {
           </Button>
         }
       />
-      <Route path="*" element={<Navigate to={"pagina-inicial"} />} />
+      <Route path="*" element={<Navigate to={'pagina-inicial'} />} />
     </Routes>
   );
 }

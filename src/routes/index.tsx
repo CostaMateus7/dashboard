@@ -1,3 +1,4 @@
+import { Button } from "@mui/material";
 import { Route, Routes, Navigate } from "react-router-dom";
 
 function AppRoutes() {
@@ -5,7 +6,11 @@ function AppRoutes() {
     <Routes>
       <Route
         path="pagina-inicial"
-        element={<h1>Página Inicial - Comanda Inteligente</h1>}
+        element={
+          <Button variant="contained" color="primary">
+            Cardápio Inteligente
+          </Button>
+        }
       />
       <Route path="*" element={<Navigate to={"pagina-inicial"} />} />
     </Routes>

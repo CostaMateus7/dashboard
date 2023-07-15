@@ -11,7 +11,7 @@ import {
   useMediaQuery,
   useTheme,
 } from '@mui/material';
-import { useAppDrawerContext } from '../../context';
+import { useAppDrawerContext, useAppThemeContext } from '../../context';
 import { useMatch, useNavigate, useResolvedPath } from 'react-router-dom';
 interface IChildrenReact {
   children: React.ReactNode;
@@ -50,6 +50,7 @@ export const MenuLateral = ({ children }: IChildrenReact) => {
   const theme = useTheme();
   const smDown = useMediaQuery(theme.breakpoints.down('sm'));
   const { isDrawerOpen, toogleDrawer, drawerOptions } = useAppDrawerContext();
+  const { toogleTheme } = useAppThemeContext();
   return (
     <>
       <Drawer
@@ -82,6 +83,16 @@ export const MenuLateral = ({ children }: IChildrenReact) => {
                   onclick={smDown ? toogleDrawer : undefined}
                 />
               ))}
+            </List>
+          </Box>
+          <Box>
+            <List component="nav">
+              <ListItemButton onClick={toogleTheme}>
+                <ListItemIcon>
+                  <Icon>dark_mode</Icon>
+                </ListItemIcon>
+                <ListItemText primary="Alterar Tema" />
+              </ListItemButton>
             </List>
           </Box>
         </Box>

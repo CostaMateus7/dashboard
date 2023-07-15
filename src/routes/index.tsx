@@ -1,10 +1,20 @@
 import { Button } from '@mui/material';
 import { Route, Routes, Navigate } from 'react-router-dom';
-import { useAppDrawerContext, useAppThemeContext } from '../shared/context';
+import { useAppDrawerContext } from '../shared/context';
+import { useEffect } from 'react';
 
 function AppRoutes() {
-  // const { toogleTheme } = useAppThemeContext();
-  const { toogleDrawer } = useAppDrawerContext();
+  const { toogleDrawer, setDrawerOptions } = useAppDrawerContext();
+
+  useEffect(() => {
+    setDrawerOptions([
+      {
+        label: 'Página Inicial',
+        icon: 'home',
+        path: '/pagina-inicial',
+      },
+    ]);
+  }, []);
   return (
     <Routes>
       <Route

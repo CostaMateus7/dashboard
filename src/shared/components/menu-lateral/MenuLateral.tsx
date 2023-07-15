@@ -12,14 +12,44 @@ import {
   useTheme,
 } from '@mui/material';
 import { useAppDrawerContext } from '../../context';
+import { useMatch, useNavigate, useResolvedPath } from 'react-router-dom';
 interface IChildrenReact {
   children: React.ReactNode;
 }
+interface IListItemLinkProps {
+  to: string;
+  icon: string;
+  label: string;
+  onclick: (() => void) | undefined;
+}
+
+export const ListItemLink = ({
+  to,
+  icon,
+  label,
+  onclick,
+}: IListItemLinkProps) => {
+  const navigate = useNavigate();
+  const resolvedPath = useResolvedPath(to);
+  const match = useMatch({ path: resolvedPath.pathname, end: false });
+  const handleClick = () => {
+    onclick?.();
+    navigate(to);
+  };
+  return (
+    <ListItemButton selected={!!match} onClick={handleClick}>
+      <ListItemIcon>
+        <Icon>{icon}</Icon>
+      </ListItemIcon>
+      <ListItemText primary={label} />
+    </ListItemButton>
+  );
+};
 
 export const MenuLateral = ({ children }: IChildrenReact) => {
   const theme = useTheme();
   const smDown = useMediaQuery(theme.breakpoints.down('sm'));
-  const { isDrawerOpen, toogleDrawer } = useAppDrawerContext();
+  const { isDrawerOpen, toogleDrawer, drawerOptions } = useAppDrawerContext();
   return (
     <>
       <Drawer
@@ -43,12 +73,15 @@ export const MenuLateral = ({ children }: IChildrenReact) => {
           <Divider />
           <Box flex={1}>
             <List component="nav">
-              <ListItemButton>
-                <ListItemIcon>
-                  <Icon>home</Icon>
-                </ListItemIcon>
-                <ListItemText primary="Página Inicial" />
-              </ListItemButton>
+              {drawerOptions.map((drawerOption) => (
+                <ListItemLink
+                  icon={drawerOption.icon}
+                  key={drawerOption.path}
+                  to={drawerOption.path}
+                  label={drawerOption.label}
+                  onclick={smDown ? toogleDrawer : undefined}
+                />
+              ))}
             </List>
           </Box>
         </Box>

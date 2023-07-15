@@ -1,10 +1,10 @@
-import { Button } from '@mui/material';
 import { Route, Routes, Navigate } from 'react-router-dom';
 import { useAppDrawerContext } from '../shared/context';
 import { useEffect } from 'react';
+import { Dashboard } from '../pages';
 
 function AppRoutes() {
-  const { toogleDrawer, setDrawerOptions } = useAppDrawerContext();
+  const { setDrawerOptions } = useAppDrawerContext();
 
   useEffect(() => {
     setDrawerOptions([
@@ -17,14 +17,7 @@ function AppRoutes() {
   }, []);
   return (
     <Routes>
-      <Route
-        path="pagina-inicial"
-        element={
-          <Button variant="contained" onClick={toogleDrawer}>
-            Teste
-          </Button>
-        }
-      />
+      <Route path="pagina-inicial" element={<Dashboard />} />
       <Route path="*" element={<Navigate to={'pagina-inicial'} />} />
     </Routes>
   );

@@ -1,5 +1,9 @@
 import { LayoutBasePage } from '../../shared/layouts';
 
 export const Dashboard = () => {
-  return <LayoutBasePage title="Página Inicial">Testando</LayoutBasePage>;
+  return (
+    <LayoutBasePage title="Página Inicial" toolbar={<>Toolbar</>}>
+      Testando
+    </LayoutBasePage>
+  );
 };

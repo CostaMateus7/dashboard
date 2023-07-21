@@ -1,11 +1,11 @@
-import { Toolbar } from '..';
+import { DetailTools } from '..';
 import { LayoutBasePage } from '../../shared/layouts';
 
 export const Dashboard = () => {
   return (
     <LayoutBasePage
       title="Página Inicial"
-      toolbar={<Toolbar showInputSearch />}
+      toolbar={<DetailTools showSaveAndCloseButton />}
     >
       Testando
     </LayoutBasePage>

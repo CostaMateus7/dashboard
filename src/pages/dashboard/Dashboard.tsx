@@ -1,4 +1,4 @@
-import { DetailTools } from '..';
+import { DetailTools } from '../../shared/components';
 import { LayoutBasePage } from '../../shared/layouts';
 
 export const Dashboard = () => {

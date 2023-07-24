@@ -1,12 +1,6 @@
-import {
-  Box,
-  Button,
-  Icon,
-  // InputAdornment,
-  Paper,
-  TextField,
-  useTheme,
-} from '@mui/material';
+import { Box, Button, Icon, Paper, TextField, useTheme } from '@mui/material';
+
+import { Environment } from '../../environment';
 
 interface IToolbarProps {
   searchText?: string;
@@ -40,15 +34,11 @@ export const Toolbar = ({
       {showInputSearch && (
         <TextField
           InputProps={{
-            startAdornment: (
-              // <InputAdornment position="start">
-              <Icon>search</Icon>
-              // </InputAdornment>
-            ),
+            startAdornment: <Icon>search</Icon>,
           }}
           value={searchText}
           size="small"
-          placeholder="Pesquisar..."
+          placeholder={Environment.SEARCH_INPUT}
           onChange={(e) => changeTextSearch?.(e.target.value)}
         />
       )}

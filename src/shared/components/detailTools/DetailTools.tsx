@@ -8,7 +8,6 @@ import {
   MenuItem,
   MenuList,
   Paper,
-  Popper,
   Skeleton,
   Typography,
   useMediaQuery,

@@ -1,19 +1,19 @@
 import { Environment } from '../../../environment';
 import { Api } from '../axios-config';
 
-interface IListingPerson {
+export interface IListingPerson {
   id: number;
   email: string;
   cidadeId: number;
   nomeCompleto: string;
 }
-interface IDetailPerson {
+export interface IDetailPerson {
   id: number;
   email: string;
   cidadeId: number;
   nomeCompleto: string;
 }
-type TPersonWithTotalCount = {
+export type TPersonWithTotalCount = {
   data: IListingPerson[];
   totalCount: number;
 };
@@ -39,7 +39,7 @@ const getAll = async (
     );
   }
 };
-const getById = async (id: number): Promise<number | Error> => {
+const getById = async (id: number): Promise<IDetailPerson | Error> => {
   try {
     const { data } = await Api.get(`/pessoas/${id}`);
     if (data) {

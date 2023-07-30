@@ -1,13 +1,12 @@
-import { useEffect, useRef, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { Box, Grid, LinearProgress, Paper, Typography } from '@mui/material';
 import { useParams, useNavigate } from 'react-router-dom';
-import { Form } from '@unform/web';
-import { FormHandles } from '@unform/core';
 
 import { peopleService } from '../../shared/service/api/people/peopleService';
 import { DetailTools } from '../../shared/components';
 import { LayoutBasePage } from '../../shared/layouts';
-import { VTextField } from '../../shared/forms';
+import { VForm, VTextField } from '../../shared/forms';
+import { useVForm } from '../../shared/forms/useVForm';
 
 interface IFormData {
   email: string;
@@ -18,7 +17,7 @@ interface IFormData {
 export const DetailPeople = () => {
   const [name, setName] = useState('');
   const [isLoading, setIsLoading] = useState(false);
-  const formRef = useRef<FormHandles>(null);
+  const { formRef, save, saveAndClose, isSaveAndClose } = useVForm();
 
   const navigate = useNavigate();
   const { id = 'nova' } = useParams<'id'>();
@@ -54,7 +53,11 @@ export const DetailPeople = () => {
           alert(result.message);
           return;
         } else {
-          navigate(`/pessoas/detalhe/${result}`);
+          if (isSaveAndClose()) {
+            navigate(`/pessoas`);
+          } else {
+            navigate(`/pessoas/detalhe/${result}`);
+          }
         }
       });
     } else {
@@ -65,6 +68,10 @@ export const DetailPeople = () => {
           if (result instanceof Error) {
             alert(result.message);
             return;
+          } else {
+            if (isSaveAndClose()) {
+              navigate(`/pessoas`);
+            }
           }
         });
     }
@@ -91,6 +98,8 @@ export const DetailPeople = () => {
           showNewButton={id !== 'nova'}
           showSaveAndCloseButton
           showDeleteButton={id !== 'nova'}
+          onClickSave={save}
+          onClickSaveAndClose={saveAndClose}
           onClickBack={() => {
             navigate('/pessoas');
           }}
@@ -98,12 +107,10 @@ export const DetailPeople = () => {
           onClickNew={() => {
             navigate('/pessoas/detalhe/nova');
           }}
-          onClickSave={() => formRef.current?.submitForm()}
-          onClickSaveAndClose={() => formRef.current?.submitForm()}
         />
       }
     >
-      <Form ref={formRef} onSubmit={handleSave}>
+      <VForm ref={formRef} onSubmit={handleSave}>
         <Box
           margin={1}
           component={Paper}
@@ -121,7 +128,7 @@ export const DetailPeople = () => {
               <Typography variant="h6">Geral</Typography>
             </Grid>
             <Grid container item direction="row">
-              <Grid item xs={12} sm={12} md={6} lg={4} xl={2}>
+              <Grid item xs={12} sm={12} md={6} lg={4} xl={3}>
                 <VTextField
                   disabled={isLoading}
                   fullWidth
@@ -132,7 +139,7 @@ export const DetailPeople = () => {
               </Grid>
             </Grid>
             <Grid container item direction="row">
-              <Grid item xs={12} sm={12} md={6} lg={4} xl={2}>
+              <Grid item xs={12} sm={12} md={6} lg={4} xl={3}>
                 <VTextField
                   disabled={isLoading}
                   fullWidth
@@ -142,7 +149,7 @@ export const DetailPeople = () => {
               </Grid>
             </Grid>
             <Grid container item direction="row">
-              <Grid item xs={12} sm={12} md={6} lg={4} xl={2}>
+              <Grid item xs={12} sm={12} md={6} lg={6} xl={3}>
                 <VTextField
                   disabled={isLoading}
                   fullWidth
@@ -153,7 +160,7 @@ export const DetailPeople = () => {
             </Grid>
           </Grid>
         </Box>
-      </Form>
+      </VForm>
     </LayoutBasePage>
   );
 };

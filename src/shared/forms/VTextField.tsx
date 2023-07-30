@@ -19,13 +19,19 @@ export const VTextField = ({ name, ...rest }: TVTextFieldProps) => {
   }, [fieldName, registerField, value]);
   return (
     <TextField
+      {...rest}
       value={value}
-      onChange={(e) => setValue(e.target.value)}
+      onChange={(e) => {
+        setValue(e.target.value);
+        rest.onChange?.(e);
+      }}
       helperText={error}
       error={!!error}
       defaultValue={defaultValue}
-      onKeyDown={() => (error ? clearError() : undefined)}
-      {...rest}
+      onKeyDown={(e) => {
+        error && clearError();
+        rest.onKeyDown?.(e);
+      }}
     />
   );
 };

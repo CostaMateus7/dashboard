@@ -2,9 +2,9 @@
   "pessoas": [
     {
       "id": 7,
+      "nomeCompleto": "Marcos Orelinha de Boi",
       "email": "marcospai@gmail.com",
-      "cidadeId": 100,
-      "nomeCompleto": "Marcos Aurélio"
+      "cidadeId": 100
     },
     {
       "id": 8,
@@ -101,6 +101,12 @@
       "email": "JoJo@gmail.com",
       "cidadeId": "1234",
       "id": 23
+    },
+    {
+      "nomeCompleto": "jubileu",
+      "email": "jubileuu@yahoo.com",
+      "cidadeId": "192",
+      "id": 24
     }
   ]
 }

@@ -1,12 +1,14 @@
 import { useEffect, useState } from 'react';
 import { Box, Grid, LinearProgress, Paper, Typography } from '@mui/material';
 import { useParams, useNavigate } from 'react-router-dom';
+import * as yup from 'yup';
 
 import { peopleService } from '../../shared/service/api/people/peopleService';
 import { DetailTools } from '../../shared/components';
 import { LayoutBasePage } from '../../shared/layouts';
 import { VForm, VTextField } from '../../shared/forms';
 import { useVForm } from '../../shared/forms/useVForm';
+import { IVFormErrors } from '../../shared/forms/IVFormErrors';
 
 interface IFormData {
   email: string;
@@ -14,6 +16,11 @@ interface IFormData {
   nomeCompleto: string;
 }
 
+const validationFormSchema: yup.ObjectSchema<IFormData> = yup.object().shape({
+  email: yup.string().required().email(),
+  cidadeId: yup.number().required(),
+  nomeCompleto: yup.string().required().min(3),
+});
 export const DetailPeople = () => {
   const [name, setName] = useState('');
   const [isLoading, setIsLoading] = useState(false);
@@ -45,36 +52,49 @@ export const DetailPeople = () => {
     }
   }, [id]);
   const handleSave = (data: IFormData) => {
-    setIsLoading(true);
-    if (id === 'nova') {
-      peopleService.create(data).then((result) => {
-        setIsLoading(false);
-        if (result instanceof Error) {
-          alert(result.message);
-          return;
-        } else {
-          if (isSaveAndClose()) {
-            navigate(`/pessoas`);
-          } else {
-            navigate(`/pessoas/detalhe/${result}`);
-          }
-        }
-      });
-    } else {
-      peopleService
-        .updateById(Number(id), { id: Number(id), ...data })
-        .then((result) => {
-          setIsLoading(false);
-          if (result instanceof Error) {
-            alert(result.message);
-            return;
-          } else {
-            if (isSaveAndClose()) {
-              navigate(`/pessoas`);
+    validationFormSchema
+      .validate(data, { abortEarly: false })
+      .then((validatedData) => {
+        setIsLoading(true);
+        if (id === 'nova') {
+          peopleService.create(validatedData).then((result) => {
+            setIsLoading(false);
+            if (result instanceof Error) {
+              alert(result.message);
+              return;
+            } else {
+              if (isSaveAndClose()) {
+                navigate(`/pessoas`);
+              } else {
+                navigate(`/pessoas/detalhe/${result}`);
+              }
             }
-          }
+          });
+        } else {
+          peopleService
+            .updateById(Number(id), { id: Number(id), ...validatedData })
+            .then((result) => {
+              setIsLoading(false);
+              if (result instanceof Error) {
+                alert(result.message);
+                return;
+              } else {
+                if (isSaveAndClose()) {
+                  navigate(`/pessoas`);
+                }
+              }
+            });
+        }
+      })
+      .catch((errors: yup.ValidationError) => {
+        const validationErros: IVFormErrors = {};
+
+        errors.inner.forEach((error) => {
+          if (!error.path) return;
+          validationErros[error.path] = error.message;
         });
-    }
+        formRef.current?.setErrors(validationErros);
+      });
   };
   const handleDelete = (id: number) => {
     if (confirm('Realmente deseja deletar este campo?')) {

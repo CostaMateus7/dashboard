@@ -1,6 +1,8 @@
 import { useCallback, useRef } from 'react';
 import { FormHandles } from '@unform/core';
 
+import '../forms/YupTranslations';
+
 export const useVForm = () => {
   const formRef = useRef<FormHandles>(null);
   const isSaveAndNew = useRef(false);

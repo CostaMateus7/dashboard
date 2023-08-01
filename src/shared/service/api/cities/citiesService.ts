@@ -1,29 +1,25 @@
 import { Environment } from '../../../environment';
 import { Api } from '../axios-config';
 
-export interface IListingPerson {
+export interface IListingCity {
   id: number;
-  email: string;
-  cidadeId: number;
-  nomeCompleto: string;
+  nome: string;
 }
-export interface IDetailPerson {
+export interface IDetailCity {
   id: number;
-  email: string;
-  cidadeId: number;
-  nomeCompleto: string;
+  nome: string;
 }
-export type TPersonWithTotalCount = {
-  data: IListingPerson[];
+export type TCityWithTotalCount = {
+  data: IListingCity[];
   totalCount: number;
 };
 
 const getAll = async (
   page = 1,
   filter = '',
-): Promise<TPersonWithTotalCount | Error> => {
+): Promise<TCityWithTotalCount | Error> => {
   try {
-    const relativeUrl = `/pessoas?_page=${page}&_limit=${Environment.LINE_LIMIT}&nomeCompleto_like=${filter}`;
+    const relativeUrl = `/cidade?_page=${page}&_limit=${Environment.LINE_LIMIT}&nome_like=${filter}`;
     const { data, headers } = await Api.get(relativeUrl);
     if (data) {
       return {
@@ -39,9 +35,9 @@ const getAll = async (
     );
   }
 };
-const getById = async (id: number): Promise<IDetailPerson | Error> => {
+const getById = async (id: number): Promise<IDetailCity | Error> => {
   try {
-    const { data } = await Api.get(`/pessoas/${id}`);
+    const { data } = await Api.get(`/cidade/${id}`);
     if (data) {
       return data;
     }
@@ -54,10 +50,10 @@ const getById = async (id: number): Promise<IDetailPerson | Error> => {
   }
 };
 const create = async (
-  dados: Omit<IDetailPerson, 'id'>,
+  dados: Omit<IDetailCity, 'id'>,
 ): Promise<number | Error> => {
   try {
-    const { data } = await Api.post<IDetailPerson>(`/pessoas`, dados);
+    const { data } = await Api.post<IDetailCity>(`/cidade`, dados);
     if (data) {
       return data.id;
     }
@@ -71,10 +67,10 @@ const create = async (
 };
 const updateById = async (
   id: number,
-  dados: IDetailPerson,
+  dados: IDetailCity,
 ): Promise<void | Error> => {
   try {
-    await Api.put(`/pessoas/${id}`, dados);
+    await Api.put(`/cidade/${id}`, dados);
   } catch (error) {
     console.error(error);
     return new Error(
@@ -84,7 +80,7 @@ const updateById = async (
 };
 const deleteById = async (id: number): Promise<void | Error> => {
   try {
-    await Api.delete(`/pessoas/${id}`);
+    await Api.delete(`/cidade/${id}`);
   } catch (error) {
     console.error(error);
     return new Error(
@@ -93,7 +89,7 @@ const deleteById = async (id: number): Promise<void | Error> => {
   }
 };
 
-export const peopleService = {
+export const CitiesService = {
   getAll,
   getById,
   create,

@@ -14,6 +14,11 @@ function AppRoutes() {
         path: '/pagina-inicial',
       },
       {
+        label: 'Cidades',
+        icon: 'location_city',
+        path: '/cidades',
+      },
+      {
         label: 'Pessoas',
         icon: 'people',
         path: '/pessoas',
@@ -23,8 +28,13 @@ function AppRoutes() {
   return (
     <Routes>
       <Route path="/pagina-inicial" element={<Dashboard />} />
+
       <Route path="/pessoas" element={<ListingPeople />} />
       <Route path="/pessoas/detalhe/:id" element={<DetailPeople />} />
+
+      <Route path="/cidades" element={<ListingPeople />} />
+      <Route path="/cidades/detalhe/:id" element={<DetailPeople />} />
+
       <Route path="*" element={<Navigate to={'pagina-inicial'} />} />
     </Routes>
   );

@@ -19,7 +19,7 @@ const getAll = async (
   filter = '',
 ): Promise<TCityWithTotalCount | Error> => {
   try {
-    const relativeUrl = `/cidade?_page=${page}&_limit=${Environment.LINE_LIMIT}&nome_like=${filter}`;
+    const relativeUrl = `/cidades?_page=${page}&_limit=${Environment.LINE_LIMIT}&nome_like=${filter}`;
     const { data, headers } = await Api.get(relativeUrl);
     if (data) {
       return {
@@ -37,7 +37,7 @@ const getAll = async (
 };
 const getById = async (id: number): Promise<IDetailCity | Error> => {
   try {
-    const { data } = await Api.get(`/cidade/${id}`);
+    const { data } = await Api.get(`/cidades/${id}`);
     if (data) {
       return data;
     }
@@ -53,7 +53,7 @@ const create = async (
   dados: Omit<IDetailCity, 'id'>,
 ): Promise<number | Error> => {
   try {
-    const { data } = await Api.post<IDetailCity>(`/cidade`, dados);
+    const { data } = await Api.post<IDetailCity>(`/cidades`, dados);
     if (data) {
       return data.id;
     }
@@ -70,7 +70,7 @@ const updateById = async (
   dados: IDetailCity,
 ): Promise<void | Error> => {
   try {
-    await Api.put(`/cidade/${id}`, dados);
+    await Api.put(`/cidades/${id}`, dados);
   } catch (error) {
     console.error(error);
     return new Error(
@@ -80,7 +80,7 @@ const updateById = async (
 };
 const deleteById = async (id: number): Promise<void | Error> => {
   try {
-    await Api.delete(`/cidade/${id}`);
+    await Api.delete(`/cidades/${id}`);
   } catch (error) {
     console.error(error);
     return new Error(
@@ -89,7 +89,7 @@ const deleteById = async (id: number): Promise<void | Error> => {
   }
 };
 
-export const CitiesService = {
+export const citiesService = {
   getAll,
   getById,
   create,

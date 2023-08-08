@@ -1,6 +1,9 @@
-import { Route, Routes, Navigate } from 'react-router-dom';
-import { useAppDrawerContext } from '../shared/context';
 import { useEffect } from 'react';
+import { Route, Routes, Navigate } from 'react-router-dom';
+
+import { useAppDrawerContext } from '../shared/context';
+import { DetailCity } from '../pages/cities/DetailCities';
+import { ListingCities } from '../pages/cities/ListingCities';
 import { Dashboard, DetailPeople, ListingPeople } from '../pages';
 
 function AppRoutes() {
@@ -14,14 +17,14 @@ function AppRoutes() {
         path: '/pagina-inicial',
       },
       {
-        label: 'Cidades',
-        icon: 'location_city',
-        path: '/cidades',
-      },
-      {
         label: 'Pessoas',
         icon: 'people',
         path: '/pessoas',
+      },
+      {
+        label: 'Cidades',
+        icon: 'location_city',
+        path: '/cidades',
       },
     ]);
   }, []);
@@ -32,8 +35,8 @@ function AppRoutes() {
       <Route path="/pessoas" element={<ListingPeople />} />
       <Route path="/pessoas/detalhe/:id" element={<DetailPeople />} />
 
-      <Route path="/cidades" element={<ListingPeople />} />
-      <Route path="/cidades/detalhe/:id" element={<DetailPeople />} />
+      <Route path="/cidades" element={<ListingCities />} />
+      <Route path="/cidades/detalhe/:id" element={<DetailCity />} />
 
       <Route path="*" element={<Navigate to={'pagina-inicial'} />} />
     </Routes>

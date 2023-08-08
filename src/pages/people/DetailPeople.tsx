@@ -9,6 +9,7 @@ import { LayoutBasePage } from '../../shared/layouts';
 import { VForm, VTextField } from '../../shared/forms';
 import { useVForm } from '../../shared/forms/useVForm';
 import { IVFormErrors } from '../../shared/forms/IVFormErrors';
+import { AutoCompleteCities } from './components/AutoCompleteCities';
 
 interface IFormData {
   email: string;
@@ -169,13 +170,8 @@ export const DetailPeople = () => {
               </Grid>
             </Grid>
             <Grid container item direction="row">
-              <Grid item xs={12} sm={12} md={6} lg={6} xl={3}>
-                <VTextField
-                  disabled={isLoading}
-                  fullWidth
-                  label="Cidade"
-                  name="cidadeId"
-                />
+              <Grid item xs={12} sm={12} md={6} lg={4} xl={3}>
+                <AutoCompleteCities isExternalLoading={isLoading} />
               </Grid>
             </Grid>
           </Grid>

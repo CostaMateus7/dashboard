@@ -12,7 +12,7 @@ import React from 'react';
 interface ILayoutBasePageProps {
   title: string;
   children: React.ReactNode;
-  toolbar: React.ReactNode;
+  toolbar?: React.ReactNode;
 }
 export const LayoutBasePage = ({
   children,

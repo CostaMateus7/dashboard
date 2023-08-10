@@ -1,4 +1,5 @@
 Projeto "Dashboard" em React com TypeScript e Material UI
+
 Bem-vindo ao repositório do projeto "Dashboard"! Este é um aplicativo desenvolvido usando as tecnologias React, TypeScript e Material UI. Ele foi projetado para oferecer uma interface intuitiva e eficiente para gerenciamento de informações relacionadas a cidades e pessoas. O projeto utiliza o JSON Server para simular uma API e fornecer dados fictícios.
 
 Funcionalidades Principais

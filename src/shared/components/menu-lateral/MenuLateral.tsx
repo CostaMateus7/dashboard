@@ -11,7 +11,11 @@ import {
   useMediaQuery,
   useTheme,
 } from '@mui/material';
-import { useAppDrawerContext, useAppThemeContext } from '../../context';
+import {
+  useAppDrawerContext,
+  useAppThemeContext,
+  useAuthContext,
+} from '../../context';
 import { useMatch, useNavigate, useResolvedPath } from 'react-router-dom';
 interface IChildrenReact {
   children: React.ReactNode;
@@ -49,6 +53,8 @@ export const ListItemLink = ({
 export const MenuLateral = ({ children }: IChildrenReact) => {
   const theme = useTheme();
   const smDown = useMediaQuery(theme.breakpoints.down('sm'));
+
+  const { logout } = useAuthContext();
   const { isDrawerOpen, toogleDrawer, drawerOptions } = useAppDrawerContext();
   const { toogleTheme } = useAppThemeContext();
   return (
@@ -92,6 +98,12 @@ export const MenuLateral = ({ children }: IChildrenReact) => {
                   <Icon>dark_mode</Icon>
                 </ListItemIcon>
                 <ListItemText primary="Alterar Tema" />
+              </ListItemButton>
+              <ListItemButton onClick={logout}>
+                <ListItemIcon>
+                  <Icon>logout</Icon>
+                </ListItemIcon>
+                <ListItemText primary="Sair" />
               </ListItemButton>
             </List>
           </Box>

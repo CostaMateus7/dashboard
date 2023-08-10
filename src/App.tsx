@@ -8,19 +8,21 @@ import {
   AppThemeProvider,
   AuthProvider,
 } from './shared/context';
-import { MenuLateral } from './shared/components';
+import { Login, MenuLateral } from './shared/components';
 
 function App() {
   return (
     <AuthProvider>
       <AppThemeProvider>
-        <AppDrawerProvider>
-          <BrowserRouter>
-            <MenuLateral>
-              <AppRoutes />
-            </MenuLateral>
-          </BrowserRouter>
-        </AppDrawerProvider>
+        <Login>
+          <AppDrawerProvider>
+            <BrowserRouter>
+              <MenuLateral>
+                <AppRoutes />
+              </MenuLateral>
+            </BrowserRouter>
+          </AppDrawerProvider>
+        </Login>
       </AppThemeProvider>
     </AuthProvider>
   );
